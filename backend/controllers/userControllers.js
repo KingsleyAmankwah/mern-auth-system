@@ -16,5 +16,5 @@ const getMe = asyncHanlder(async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  getMe
+  getMe,
 };
