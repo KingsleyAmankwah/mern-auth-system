@@ -10,6 +10,13 @@ function Register() {
 
   const { name, email, password, password2 } = formData;
 
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <>
       <section class="h-full gradient-form md:h-screen background-radial-gradient">
@@ -33,6 +40,8 @@ function Register() {
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             placeholder="Full Name"
                             name="name"
+                            value={name}
+                            onChange={onChange}
                             required
                           />
                         </div>
@@ -42,6 +51,8 @@ function Register() {
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             placeholder="Email"
                             name="email"
+                            value={email}
+                            onChange={onChange}
                             required
                           />
                         </div>
@@ -51,6 +62,8 @@ function Register() {
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             placeholder="Password"
                             name="password"
+                            value={password}
+                            onChange={onChange}
                             required
                           />
                         </div>
@@ -61,6 +74,8 @@ function Register() {
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             placeholder="Confirm Password"
                             name="password2"
+                            value={password2}
+                            onChange={onChange}
                             required
                           />
                         </div>
