@@ -10,19 +10,12 @@ function Register() {
                   <div class="lg:w-6/12 px-4 md:px-0">
                     <div class="md:p-12 md:mx-6">
                       <div className="text-center">
-                        <img
-                          className="mx-auto w-40"
-                          src="../assets/memories-ii.png"
-                          alt="logo"
-                        />
-                        <h4 className="text-xl font-semibold mt-1 mb-5 pb-1">
-                          We are Remembrance, Let us be your Memory Book...
-                        </h4>
+                        <h1 className="text-3xl font-semibold mt-1 mb-5 pb-1">
+                          Register
+                        </h1>
                       </div>
                       <form>
-                        <p class="mb-4">
-                          Create an account to share your memories
-                        </p>
+                        <p class="mb-4">Please Create an account...</p>
                         <div class="mb-4">
                           <input
                             type="text"
