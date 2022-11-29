@@ -25,7 +25,7 @@ const registerUser = asyncHanlder(async (req, res) => {
   //Check for passwords Input
   if (password !== password2) {
     res.status(400);
-    throw new Error("The two passwords do match");
+    throw new Error("Passwords do match");
   }
 
   //Hash Password
