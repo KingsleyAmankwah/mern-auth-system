@@ -10,15 +10,9 @@ function Login() {
                   <div className="lg:w-6/12 px-4 md:px-0">
                     <div className="md:p-12 md:mx-6">
                       <div className="text-center">
-                        <img
-                          className="mx-auto w-40"
-                          src="../assets/memories-ii.png"
-                          alt="logo"
-                          srcSet=""
-                        />
-                        <h4 className="text-xl font-semibold mt-1 mb-5 pb-1">
-                          We are Remembrance, Let us be your Memory Book...
-                        </h4>
+                        <h1 className="text-3xl font-semibold mt-1 mb-5 pb-1">
+                          Login
+                        </h1>
                       </div>
                       <form>
                         <p className="my-4">Please login to your account</p>
@@ -49,7 +43,7 @@ function Login() {
                           </button>
                         </div>
 
-                        <div className="flex items-center my-2 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+                        {/* <div className="flex items-center my-2 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                           <p className="text-center font-semibold mx-4 mb-0">
                             OR
                           </p>
@@ -65,7 +59,7 @@ function Login() {
                             srcset=""
                           />{" "}
                           Continue with Google
-                        </a>
+                        </a> */}
                         <div className="flex items-center justify-between pb-6">
                           <p className="mb-0 mr-2">Don't have an account?</p>
                           <a
