@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -14,6 +16,10 @@ function Login() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <>
       <section className="h-full gradient-form md:h-screen background-radial-gradient">
