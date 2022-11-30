@@ -1,4 +1,19 @@
+import { useState } from "react";
+
 function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = formData;
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
     <>
       <section className="h-full gradient-form md:h-screen background-radial-gradient">
@@ -21,8 +36,10 @@ function Login() {
                             type="email"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             name="email"
+                            value={email}
+                            onChange={onChange}
                             placeholder="Email"
-                            required
+                            // required
                           />
                         </div>
                         <div className="mb-4">
@@ -30,8 +47,10 @@ function Login() {
                             type="password"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             name="password"
+                            value={password}
+                            onChange={onChange}
                             placeholder="Password"
-                            required
+                            // required
                           />
                         </div>
                         <div className="text-center pt-1 mb-5 pb-1">
