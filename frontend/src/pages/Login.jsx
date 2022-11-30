@@ -32,7 +32,7 @@ function Login() {
     dispatch(login(userData))
       .unwrap()
       .then((user) => {
-        toast.success(`Login successfully as - ${user.name}`);
+        toast.success(`Logged in as - ${user.name}`);
         navigate("/");
       })
       .catch(toast.error);
