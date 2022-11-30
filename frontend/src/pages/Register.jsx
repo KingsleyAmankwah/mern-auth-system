@@ -27,10 +27,6 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !password2) {
-      toast.error("Please add all fields");
-    }
-
     if (password !== password2) {
       toast.error("The two passwords do not match");
     } else {
