@@ -34,7 +34,7 @@ function Home() {
 
       <section className="heading">
         <h1>Welcome to Mern Auth System</h1>
-        <p>Please choose from an option below</p>
+        <p>{user.name}</p>
       </section>
     </div>
   );
