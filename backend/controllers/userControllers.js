@@ -7,10 +7,10 @@ const bcrypt = require("bcryptjs");
 // @route   /api/users/
 // @access  Public
 const registerUser = asyncHanlder(async (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const { name, email, password } = req.body;
 
   //validate user input
-  if (!name || !email || !password || !password2) {
+  if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -20,12 +20,6 @@ const registerUser = asyncHanlder(async (req, res) => {
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
-  }
-
-  //Check for passwords Input
-  if (password !== password2) {
-    res.status(400);
-    throw new Error("Passwords do match");
   }
 
   //Hash Password
