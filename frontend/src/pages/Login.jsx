@@ -21,6 +21,23 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userData))
+      .unwrap()
+      .then((user) => {
+        toast.success(`Login successfully as - ${user.name}`);
+        navigate("/");
+      })
+      .catch(toast.error);
+  };
+
   return (
     <>
       <section className="h-full gradient-form md:h-screen background-radial-gradient">
@@ -36,7 +53,7 @@ function Login() {
                           Login
                         </h1>
                       </div>
-                      <form>
+                      <form onSubmit={onSubmit}>
                         <p className="my-4">Please login to your account</p>
                         <div className="mb-4">
                           <input
