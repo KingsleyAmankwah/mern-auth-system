@@ -25,21 +25,29 @@ function Register() {
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
-    e.preventdefault();
+    e.preventDefault();
 
-    const userData = {
-      name,
-      email,
-      password,
-    };
+    if (!name || !email || !password || !password2) {
+      toast.error("Please add all fields");
+    }
 
-    dispatch(register(userData))
-      .unwrap()
-      .then((user) => {
-        toast.success(`Welcome to mern auth system ${user.name}`);
-        navigate("/");
-      })
-      .catch(toast.error);
+    if (password !== password2) {
+      toast.error("The two passwords do not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+
+      dispatch(register(userData))
+        .unwrap()
+        .then((user) => {
+          toast.success(`Welcome to mern auth system ${user.name}`);
+          navigate("/");
+        })
+        .catch(toast.error);
+    }
   };
 
   return (
@@ -134,7 +142,7 @@ function Register() {
                       </div>
                     </div>
                   </div>
-                  <div class="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none background-radial-gradient">
+                  <div class="hidden lg:w-6/12 lg:flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none background-radial-gradient">
                     <div class="text-white px-4 py-6 md:p-12 md:mx-6">
                       <h4 class="text-xl font-semibold mb-6">
                         We are more than just a company
