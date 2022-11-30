@@ -17,7 +17,7 @@ export const register = createAsyncThunk(
     try {
       return await authService.register(user);
     } catch (error) {
-      thunkAPI.rejectWithValue(extractErrorMessage(error));
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
   }
 );
@@ -27,7 +27,7 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
-    thunkAPI.rejectWithValue(extractErrorMessage(error));
+    return thunkAPI.rejectWithValue(extractErrorMessage(error));
   }
 });
 
