@@ -142,7 +142,7 @@ function Register() {
                       </div>
                     </div>
                   </div>
-                  <div class="hidden lg:w-6/12 lg:flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none background-radial-gradient">
+                  <div class=" lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none background-radial-gradient">
                     <div class="text-white px-4 py-6 md:p-12 md:mx-6">
                       <h4 class="text-xl font-semibold mb-6">
                         We are more than just a company
