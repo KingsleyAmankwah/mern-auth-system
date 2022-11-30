@@ -11,13 +11,13 @@ function Home() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/");
     }
   }, [user, navigate]);
 
   const onLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
   return (
     <div>
@@ -34,7 +34,7 @@ function Home() {
 
       <section className="heading">
         <h1>Welcome to Mern Auth System</h1>
-        <p>{user.name}</p>
+        <p>{user && user.name}</p>
       </section>
     </div>
   );
