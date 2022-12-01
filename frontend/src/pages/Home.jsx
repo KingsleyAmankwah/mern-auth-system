@@ -20,7 +20,7 @@ function Home() {
     navigate("/login");
   };
   return (
-    <div>
+    <div className="container">
       <header className="header">
         <div className="logo">Mern Auth System</div>
         <ul>
