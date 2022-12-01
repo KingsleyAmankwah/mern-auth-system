@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -37,6 +38,12 @@ function Login() {
       })
       .catch(toast.error);
   };
+
+  const { isLoading } = useSelector((state) => state.auth);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
