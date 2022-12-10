@@ -6,7 +6,6 @@ const { errorHandler } = require("./middlewares/errorMiddleware");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
-
 const app = express();
 
 app.use(express.json());
@@ -19,5 +18,8 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use(errorHandler);
 
 const Port = process.env.PORT || 8000;
-connectDB();
-app.listen(Port, () => console.log(`Server is runnig on Port ${Port}`));
+
+app.listen(Port, () => {
+  connectDB();
+  console.log(`Server is runnig on Port ${Port}`);
+});
