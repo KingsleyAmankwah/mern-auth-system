@@ -62,7 +62,7 @@ const registerUser = asyncHandler(async (req, res) => {
       bio: user.bio,
       role: user.role,
       isVerified: user.isVerified,
-      token: user.token,
+      token,
     });
   } else {
     res.status(400);
@@ -139,7 +139,7 @@ const loginUser = asyncHandler(async (req, res) => {
       secure: true,
     });
 
-    re.status(201).json({
+    res.status(201).json({
       name: user.name,
       email: user.email,
       phone: user.phone,
