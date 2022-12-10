@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Email already in use.");
   }
 
-  if (password < 6) {
+  if (password.length < 6) {
     res.status(400);
     throw new Error("Password must be at least 6 characters");
   }
@@ -66,6 +66,10 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data!");
   }
+});
+
+const loginUser = asyncHandler(async (req, res) => {
+  res.status(200).json(`Authenticate user`);
 });
 
 module.exports = {
