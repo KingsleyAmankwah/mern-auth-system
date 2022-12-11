@@ -3,8 +3,10 @@ const User = require("../model/userModel");
 const Token = require("../model/tokenModel");
 const bcrypt = require("bcryptjs");
 var parser = require("ua-parser-js");
-const { generateToken } = require("../utils/index");
+const { generateToken, hashToken } = require("../utils/index");
 const Cryptr = require("cryptr");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 //Register User
 const registerUser = asyncHandler(async (req, res) => {
@@ -67,6 +69,59 @@ const registerUser = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error("Invalid user data!");
+  }
+});
+
+//Send verification email
+const sendVerificationEmail = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found!");
+  }
+
+  if (user.isVerified) {
+    res.status(400);
+    throw new Error("User already verified");
+  }
+
+  //Delete Token if it exists in DB
+  const token = await Token.findOne({ userId: user._id });
+  if (token) {
+    await token.deleteOne();
+  }
+
+  //Create verification token
+  const verificationToken = crypto.randomBytes(32).toString("hex") + user._id;
+  console.log(verificationToken);
+
+  //Hash token and save
+  const hashedToken = hashToken(verificationToken);
+  await new Token({
+    userId: user._id,
+    vToken: hashedToken,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 60 * (60 * 1000), // 60mins
+  }).save();
+
+  //Contruct verification url
+  const verificationUrl = `${process.env.FRONTEND_URL}/verify/${verificationToken}`;
+
+  // Send Email
+  const subject = "Verify Your Account - AUTH:Z";
+  const send_to = user.email;
+  const sent_from = process.env.EMAIL_USER;
+  const template = "verifyEmail";
+  const name = user.name;
+  const link = verificationUrl;
+
+  try {
+    await sendEmail(subject, send_to, sent_from, template, name, link);
+    res.status(200).json({ message: "Verification Email Sent" });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Email not sent, please try again");
   }
 });
 
@@ -170,6 +225,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 module.exports = {
   registerUser,
+  sendVerificationEmail,
   loginUser,
   logoutUser,
 };
