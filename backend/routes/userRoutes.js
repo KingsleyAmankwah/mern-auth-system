@@ -9,6 +9,7 @@ const {
   updateUser,
   deleteUser,
   getUsers,
+  upgradeUser,
   loginStatus,
   sendVerificationEmail,
   verifyUser,
@@ -23,6 +24,7 @@ router.patch("/updateUser", protect, updateUser);
 
 router.delete("/:id", protect, adminOnly, deleteUser);
 router.get("/getUsers", protect, authorOnly, getUsers);
+router.post("/upgradeUser", protect, adminOnly, upgradeUser);
 router.get("/loginStatus", loginStatus);
 
 router.post("/sendVerificationEmail", protect, sendVerificationEmail);
