@@ -6,6 +6,7 @@ const {
   loginUser,
   logoutUser,
   getUser,
+  updateUser,
   sendVerificationEmail,
   verifyUser,
 } = require("../controllers/userControllers");
@@ -14,6 +15,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
 router.get("/getUser", getUser);
+router.patch("/updateUser", updateUser);
 
 router.post("/sendVerificationEmail", protect, sendVerificationEmail);
 router.patch("/verifyUser/:verificationToken", verifyUser);
