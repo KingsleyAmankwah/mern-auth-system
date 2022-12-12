@@ -7,6 +7,7 @@ const { generateToken, hashToken } = require("../utils/index");
 const Cryptr = require("cryptr");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
+const jwt = require("jsonwebtoken");
 
 //Register User
 const registerUser = asyncHandler(async (req, res) => {
@@ -247,6 +248,24 @@ const getUsers = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
+//Get Login status
+const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.json(false);
+  }
+
+  //Verify token
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (verified) {
+    return res.json(true);
+  } else {
+    return res.json(false);
+  }
+});
+
 //Send verification email
 const sendVerificationEmail = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -339,6 +358,7 @@ module.exports = {
   updateUser,
   deleteUser,
   getUsers,
+  loginStatus,
   sendVerificationEmail,
   verifyUser,
 };
