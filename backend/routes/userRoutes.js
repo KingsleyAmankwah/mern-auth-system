@@ -14,8 +14,8 @@ const {
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
-router.get("/getUser", getUser);
-router.patch("/updateUser", updateUser);
+router.get("/getUser", protect, getUser);
+router.patch("/updateUser", protect, updateUser);
 
 router.post("/sendVerificationEmail", protect, sendVerificationEmail);
 router.patch("/verifyUser/:verificationToken", verifyUser);
