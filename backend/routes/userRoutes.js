@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { protect , adminOnly } = require("../middlewares/authMiddleware");
+const { protect , adminOnly, authorOnly } = require("../middlewares/authMiddleware");
 const {
   registerUser,
   loginUser,
@@ -8,6 +8,7 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  getUsers,
   sendVerificationEmail,
   verifyUser,
 } = require("../controllers/userControllers");
@@ -20,6 +21,7 @@ router.patch("/updateUser", protect, updateUser);
 
 
 router.delete("/:id", protect, adminOnly, deleteUser);
+router.get("/getUsers", protect, authorOnly, getUsers);
 
 router.post("/sendVerificationEmail", protect, sendVerificationEmail);
 router.patch("/verifyUser/:verificationToken", verifyUser);
