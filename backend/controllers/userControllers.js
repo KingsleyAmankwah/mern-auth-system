@@ -223,6 +223,16 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Get Users
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().sort("-createdAt").select("-password");
+  if (!users) {
+    res.status(500);
+    throw new Error("Something went wrong");
+  }
+  res.status(200).json(users);
+});
+
 //Delete User
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
@@ -236,16 +246,6 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.status(200).json({
     message: "User deleted successfully",
   });
-});
-
-// Get Users
-const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find().sort("-createdAt").select("-password");
-  if (!users) {
-    res.status(500);
-    throw new Error("Something went wrong");
-  }
-  res.status(200).json(users);
 });
 
 //Get Login status
