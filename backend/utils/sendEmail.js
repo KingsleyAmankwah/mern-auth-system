@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 
-const sendEmail = async (sent_from, sent_to, subject, template, name, link) => {
+const sendEmail = async (sent_from, send_to, subject, template, name, link) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -28,7 +28,7 @@ const sendEmail = async (sent_from, sent_to, subject, template, name, link) => {
 
   const options = {
     from: sent_from,
-    to: sent_to,
+    to: send_to,
     subject,
     template,
     context: {
