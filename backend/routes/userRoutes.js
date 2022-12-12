@@ -9,6 +9,7 @@ const {
   updateUser,
   deleteUser,
   getUsers,
+  loginStatus,
   sendVerificationEmail,
   verifyUser,
 } = require("../controllers/userControllers");
@@ -22,6 +23,7 @@ router.patch("/updateUser", protect, updateUser);
 
 router.delete("/:id", protect, adminOnly, deleteUser);
 router.get("/getUsers", protect, authorOnly, getUsers);
+router.get("/loginStatus", loginStatus);
 
 router.post("/sendVerificationEmail", protect, sendVerificationEmail);
 router.patch("/verifyUser/:verificationToken", verifyUser);
