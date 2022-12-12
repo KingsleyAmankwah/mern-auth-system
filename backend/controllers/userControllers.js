@@ -170,6 +170,27 @@ const logoutUser = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Logout successful" });
 });
 
+//Get User
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      photo: user.photo,
+      role: user.role,
+      bio: user.bio,
+      isVerified: user.isVerified,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 //Send verification email
 const sendVerificationEmail = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -258,6 +279,7 @@ module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  getUser,
   sendVerificationEmail,
   verifyUser,
 };
