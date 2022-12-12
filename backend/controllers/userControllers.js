@@ -29,17 +29,13 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Password must be at least 6 characters");
   }
 
-  //Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
   const ua = parser(req.headers["user-agent"]);
   const userAgent = [ua.ua];
 
   const user = await User.create({
     name,
     email,
-    password: hashedPassword,
+    password,
     userAgent,
   });
 
