@@ -222,6 +222,21 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+//Delete User
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  await user.remove();
+  res.status(200).json({
+    message: "User deleted successfully",
+  });
+});
+
 //Send verification email
 const sendVerificationEmail = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -312,6 +327,7 @@ module.exports = {
   logoutUser,
   getUser,
   updateUser,
+  deleteUser,
   sendVerificationEmail,
   verifyUser,
 };
