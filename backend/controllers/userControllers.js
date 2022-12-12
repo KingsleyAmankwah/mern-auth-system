@@ -398,6 +398,56 @@ const verifyUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Account Verification Successful" });
 });
 
+// Forgot Password
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(404);
+    throw new Error("No user with this email");
+  }
+
+  // Delete Token if it exists in DB
+  const token = await Token({ userId: user.id });
+  if (token) {
+    await token.deleteOne();
+  }
+
+  //  Create reset Token and Save
+  const resetToken = crypto.randomBytes(32).toString("hex") + user._id;
+  console.log(resetToken);
+
+  // Hash token and save
+  const hashedToken = hashToken(resetToken);
+  await new Token({
+    userId: user._id,
+    rToken: hashedToken,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + 60 * (60 * 1000), //60mins
+  }).save();
+
+  // Construct Reset URL
+  const resetUrl = `${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
+
+  // Send Email
+  const subject = "Password Reset Request - AUTH:Z";
+  const send_to = user.email;
+  const sent_from = process.env.EMAIL_USER;
+  const template = "forgotPassword";
+  const name = user.name;
+  const link = resetUrl;
+
+  try {
+    await sendEmail(subject, send_to, sent_from, template, name, link);
+    res.status(200).json({ message: "Password Reset Email Sent" });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Email not sent, please try again");
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -411,4 +461,5 @@ module.exports = {
   sendAutomatedEmail,
   sendVerificationEmail,
   verifyUser,
+  forgotPassword,
 };
