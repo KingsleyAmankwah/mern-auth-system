@@ -32,6 +32,12 @@ export const login = createAsyncThunk(
   }
 );
 
+//Logout User
+export const logout = createAction("auth/logout", () => {
+  authService.logout();
+  return {};
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
