@@ -32,6 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Password must be at least 6 characters");
   }
 
+  // Get User Device Details
   const ua = parser(req.headers["user-agent"]);
   const userAgent = [ua.ua];
 
