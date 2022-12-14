@@ -34,12 +34,20 @@ const updateUser = async (userData) => {
   return response.data;
 };
 
+// Get Users
+const getUsers = async () => {
+  const response = await axios.get(API_URL + "getUsers");
+
+  return response.data;
+};
+
 const authService = {
   register,
   login,
   logout,
   getUser,
   updateUser,
+  getUsers,
 };
 
 export default authService;
