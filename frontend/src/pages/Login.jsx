@@ -1,17 +1,15 @@
 import { useNavigate } from "react-router-dom";
-// import OAuth from "../components/OAuth";
 import { useState } from "react";
-
-// import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
+import { login } from "../features/auth/authSlice";
 
 function Login() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
 
   const { email, password } = formData;
 
@@ -22,12 +20,29 @@ function Login() {
     }));
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.auth);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userData))
+      .unwrap()
+      .then((user) => {
+        toast.success(`Logged in as ${user.name}`);
+        navigate("/");
+      })
+      .catch(toast.error);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
