@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   users: [],
   isLoading: false,
+  twoFactor: false,
 };
 
 //Register User
