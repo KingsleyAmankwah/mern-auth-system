@@ -9,6 +9,8 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const jwt = require("jsonwebtoken");
 
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+
 //Register User
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -104,7 +106,7 @@ const loginUser = asyncHandler(async (req, res) => {
     console.log(loginCode);
 
     //Encrypt loginCode before saving
-    const encryptedLoginCode = Cryptr.encrypt(loginCode.toString());
+    const encryptedLoginCode = cryptr.encrypt(loginCode.toString());
 
     //Delete Token if it exists in database
     const userToken = await Token.findOne({ userId: user._id });
