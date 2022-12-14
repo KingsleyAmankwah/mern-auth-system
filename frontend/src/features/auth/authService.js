@@ -7,7 +7,7 @@ export const API_URL = `${BACKEND_URL}/api/users/`;
 const register = async (userData) => {
   const response = await axios.post(API_URL + "register", userData);
 
-  return response;
+  return response.data;
 };
 
 const authService = {
