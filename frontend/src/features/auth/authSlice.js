@@ -8,6 +8,18 @@ const initialState = {
   isLoading: false,
 };
 
+//Register User
+export const register = createAsyncThunk(
+  "auth/register",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.register(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
