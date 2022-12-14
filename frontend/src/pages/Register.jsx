@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-// import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
+import { register } from "../features/auth/authSlice";
 
 function Register() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,12 +22,34 @@ function Register() {
     }));
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.auth);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    if (password !== password2) {
+      toast.error("The two passwords do not match!");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+
+      dispatch(register(userData))
+        .unwrap()
+        .then((user) => {
+          toast.success(`Registered new user - ${user.name}`);
+          navigate("/");
+        })
+        .catch(toast.error);
+    }
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
