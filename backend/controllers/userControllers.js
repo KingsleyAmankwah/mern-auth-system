@@ -8,7 +8,7 @@ const Cryptr = require("cryptr");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const jwt = require("jsonwebtoken");
-const { findOne } = require("../models/userModel");
+
 
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
