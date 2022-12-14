@@ -41,7 +41,19 @@ export const logout = createAction("auth/logout", () => {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      });
+  },
 });
 
 export default authSlice.reducer;
