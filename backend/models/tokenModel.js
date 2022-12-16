@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require ("mongoose");
 
 const tokenSchema = mongoose.Schema({
   userId: {
@@ -11,10 +11,6 @@ const tokenSchema = mongoose.Schema({
     default: "",
   },
   rToken: {
-    type: String,
-    default: "",
-  },
-  lToken: {
     type: String,
     default: "",
   },
