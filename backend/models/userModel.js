@@ -44,11 +44,6 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    userAgent: {
-      type: Array,
-      required: true,
-      default: [],
-    },
   },
   {
     timestamps: true,
