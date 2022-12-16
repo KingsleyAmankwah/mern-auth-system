@@ -9,7 +9,6 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const jwt = require("jsonwebtoken");
 
-
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 //Register User
