@@ -30,10 +30,6 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Password must be at least 6 characters");
   }
 
-  // Get User Device Details
-  const ua = parser(req.headers["user-agent"]);
-  const userAgent = [ua.ua];
-
   const user = await User.create({
     name,
     email,
@@ -471,110 +467,6 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 });
 
-//Send Login Code
-const sendLoginCode = asyncHandler(async (req, res) => {
-  const { email } = req.params;
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found!");
-  }
-
-  //Find Access token in DB
-  const userToken = await Token.findOne({ userId: user._id });
-
-  if (!userToken) {
-    res.status(404);
-    throw new Error("Invalid or Expired token, please login again");
-  }
-
-  //Get Login code
-  const loginCode = await Token.lToken;
-  const decryptedLoginCode = cryptr.decrypt(loginCode);
-
-  // Send Login Code
-  const subject = "Login Access Code - AUTH:Z";
-  const send_to = email;
-  const sent_from = process.env.EMAIL_USER;
-  const template = "loginCode";
-  const name = user.name;
-  const link = decryptedLoginCode;
-
-  try {
-    await sendEmail(subject, send_to, sent_from, template, name, link);
-
-    res.status(200).json({ message: `Access code sent to ${email}` });
-  } catch (error) {
-    res.status(500);
-    throw new Error("Email not sent, please try again");
-  }
-});
-
-//Login with code
-const loginWithCode = asyncHandler(async (req, res) => {
-  const { email } = req.params;
-  const { loginCode } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
-
-  // Find Token in DB
-  const userToken = await Token.findOne({
-    userId: user._id,
-    expiresAt: { $gt: Date.now() },
-  });
-
-  if (!userToken) {
-    res.status(404);
-    throw new Error("Invalid or Expired Token, please login again");
-  }
-
-  const decryptedLoginCode = cryptr.decrypt(userToken.lToken);
-
-  if (loginCode !== decryptedLoginCode) {
-    res.status(400);
-    throw new Error("Incorrect login code, please try again");
-  } else {
-    // Register the userAgent
-    const ua = parser(req.headers["user-agent"]);
-    const thisUserAgent = ua.ua;
-    user.userAgent.push(thisUserAgent);
-    await user.save();
-
-    //Generate token
-    const token = generateToken(user._id);
-
-    // Send HTTP-only cookie
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), // 1 day
-      sameSite: "none",
-      secure: true,
-    });
-
-    const { _id, name, email, phone, bio, photo, role, isVerified } = user;
-
-    res.status(200).json({
-      _id,
-      name,
-      email,
-      phone,
-      bio,
-      photo,
-      role,
-      isVerified,
-      token,
-    });
-  }
-});
-
 module.exports = {
   registerUser,
   loginUser,
@@ -591,6 +483,4 @@ module.exports = {
   forgotPassword,
   resetPassword,
   changePassword,
-  sendLoginCode,
-  loginWithCode,
 };
