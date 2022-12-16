@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Token = require("../models/tokenModel");
 const bcrypt = require("bcryptjs");
-const parser = require("ua-parser-js");
 const { generateToken, hashToken } = require("../utils/index");
 const Cryptr = require("cryptr");
 const crypto = require("crypto");
@@ -39,7 +38,6 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    userAgent,
   });
 
   //Generate token
