@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassowrd";
 import LandingPage from "./pages/LandingPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -13,7 +14,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<Home />} />
+          <Route
+            path="*"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
