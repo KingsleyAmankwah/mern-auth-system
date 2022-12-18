@@ -37,7 +37,7 @@ function Login() {
       .unwrap()
       .then((user) => {
         toast.success(`Logged in as ${user.name}`);
-        navigate("/");
+        navigate("/home");
       })
       .catch(toast.error);
   };
