@@ -3,9 +3,11 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
 const protect = asyncHandler(async (req, res, next) => {
-  try {
-    const token = req.cookies.token;
+  const cookies = req.headers.cookie;
+  const token = cookies.split("=")[1];
+  // console.log(token);
 
+  try {
     if (!token) {
       res.status(401);
       throw new Error("Not authorized, please login");
