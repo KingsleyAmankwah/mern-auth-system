@@ -103,7 +103,7 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.user = null;
       })
 
       // Get Login Status
