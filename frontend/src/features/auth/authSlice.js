@@ -80,6 +80,30 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
+      })
+
+      //Login case
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+
+      //Logout case
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logout.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
       });
   },
 });
