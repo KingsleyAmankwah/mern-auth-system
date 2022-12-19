@@ -55,6 +55,12 @@ const upgradeUser = async (userData) => {
   return response.data.message;
 };
 
+// Get Login Status
+const getLoginStatus = async () => {
+  const response = await axios.get(API_URL + "loginStatus");
+  return response.data;
+};
+
 const authService = {
   register,
   login,
@@ -64,6 +70,7 @@ const authService = {
   getUsers,
   deleteUser,
   upgradeUser,
+  getLoginStatus,
 };
 
 export default authService;
