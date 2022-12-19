@@ -104,6 +104,18 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
+      })
+
+      // Get Login Status
+      .addCase(getLoginStatus.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getLoginStatus.fulfilled, (state, action) => {
+        state.isLoggedIn = action.payload;
+      })
+      .addCase(getLoginStatus.rejected, (state, action) => {
+        state.isLoggedIn = action.payload;
+        console.log(action.payload);
       });
   },
 });
