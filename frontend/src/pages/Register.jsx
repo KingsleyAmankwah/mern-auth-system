@@ -43,7 +43,7 @@ function Register() {
         .unwrap()
         .then((user) => {
           toast.success(`Registered new user - ${user.name}`);
-          navigate("/home");
+          navigate("/sign-in");
         })
         .catch(toast.error);
     }
