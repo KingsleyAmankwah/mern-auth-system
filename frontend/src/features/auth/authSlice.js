@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   isLoading: false,
   twoFactor: false,
+  isLoggedIn: false,
 };
 
 //Register User
@@ -39,9 +40,23 @@ export const logout = createAction("auth/logout", () => {
   return {};
 });
 
+//Get user
+export const getUser = createAsyncThunk("auth/getUser", async (_, thunkAPI) => {
+  try {
+    return await authService.getUser();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(extractErrorMessage(error));
+  }
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -57,4 +72,6 @@ export const authSlice = createSlice({
   },
 });
 
+export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
+export const selectUser = (state) => state.auth.user;
 export default authSlice.reducer;
