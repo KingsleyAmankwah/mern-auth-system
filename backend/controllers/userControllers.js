@@ -40,30 +40,8 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  //Generate token
-  const token = generateToken(user._id);
-
-  //Send Http-only token
-  res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400), //1 day
-    sameSite: "none",
-    secure: true,
-  });
-
   if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      photo: user.photo,
-      bio: user.bio,
-      role: user.role,
-      isVerified: user.isVerified,
-      token,
-    });
+    res.status(201).json(user).save();
   } else {
     res.status(400);
     throw new Error("Invalid user data!");
@@ -99,11 +77,9 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && passwordIsCorrect) {
     //Send httpOnly token
     res.cookie("token", token, {
-      path: "/",
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 86400), //1 day
-      sameSite: "none",
-      secure: true,
+      sameSite: "lax",
     });
 
     res.status(201).json({
@@ -137,23 +113,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 //Get User
 const getUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  // const user = await User.findById(req.user._id);
+  res.status(200).json(req.user);
 
-  if (user) {
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      photo: user.photo,
-      role: user.role,
-      bio: user.bio,
-      isVerified: user.isVerified,
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
+  // if (user) {
+  //   res.status(200).json({
+  //     _id: user._id,
+  //     name: user.name,
+  //     email: user.email,
+  //     phone: user.phone,
+  //     photo: user.photo,
+  //     role: user.role,
+  //     bio: user.bio,
+  //     isVerified: user.isVerified,
+  //   });
+  // } else {
+  //   res.status(404);
+  //   throw new Error("User not found");
+  // }
 });
 
 //Update User
