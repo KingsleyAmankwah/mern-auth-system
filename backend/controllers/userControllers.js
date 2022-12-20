@@ -76,10 +76,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (user && passwordIsCorrect) {
     //Send httpOnly token
-    res.cookie("token", token, {
+    res.cookie("access_token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 86400), //1 day
-      sameSite: "lax",
     });
 
     res.status(201).json({
@@ -113,8 +112,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 //Get User
 const getUser = asyncHandler(async (req, res) => {
-  // const user = await User.findById(req.user._id);
-  res.status(200).json(req.user);
+  const user = await User.findById(req.params.id);
+  res.status(200).json(user);
 
   // if (user) {
   //   res.status(200).json({
@@ -187,43 +186,6 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.status(200).json({
     message: "User deleted successfully",
   });
-});
-
-//Upgrade users
-const upgradeUser = asyncHandler(async (req, res) => {
-  const { role, id } = req.body;
-
-  const user = await User.findById(id);
-
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
-
-  user.role = role;
-  await user.save();
-
-  res.status(200).json({
-    message: `User role updated to ${role}`,
-  });
-});
-
-//Get Login status
-const loginStatus = asyncHandler(async (req, res) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    return res.json(false);
-  }
-
-  //Verify token
-  const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-  if (verified) {
-    return res.json(true);
-  } else {
-    return res.json(false);
-  }
 });
 
 //Send Automated emails
@@ -456,8 +418,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getUsers,
-  upgradeUser,
-  loginStatus,
   sendAutomatedEmail,
   sendVerificationEmail,
   verifyUser,
