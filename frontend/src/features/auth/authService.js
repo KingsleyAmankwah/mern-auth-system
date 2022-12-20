@@ -22,12 +22,6 @@ const logout = async () => {
   return response.data.message;
 };
 
-//Get User profile
-const getUser = async () => {
-  const response = await axios.get(API_URL + "getUser");
-  return response.data;
-};
-
 // Update profile
 const updateUser = async (userData) => {
   const response = await axios.patch(API_URL + "updateUser", userData);
@@ -48,29 +42,13 @@ const deleteUser = async (id) => {
   return response.data.message;
 };
 
-// Upgrade User
-const upgradeUser = async (userData) => {
-  const response = await axios.post(API_URL + "upgradeUser", userData);
-
-  return response.data.message;
-};
-
-// Get Login Status
-const getLoginStatus = async () => {
-  const response = await axios.get(API_URL + "loginStatus");
-  return response.data;
-};
-
 const authService = {
   register,
   login,
   logout,
-  getUser,
   updateUser,
   getUsers,
   deleteUser,
-  upgradeUser,
-  getLoginStatus,
 };
 
 export default authService;
