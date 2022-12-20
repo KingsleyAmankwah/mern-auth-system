@@ -1,17 +1,25 @@
-/*eslint-disable*/
-import React from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+// /*eslint-disable*/
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
 // import Profile from "../pages/Profile";
 
 // import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 // import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
-export default function Sidebar() {
-  const [collapseShow, setCollapseShow] = React.useState("hidden");
+// const [collapseShow, setCollapseShow] = React.useState("hidden");
+
+function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <>
@@ -21,7 +29,7 @@ export default function Sidebar() {
           <button
             className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
-            onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
+            // onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
             <i className="fas fa-bars"></i>
           </button>
@@ -30,7 +38,7 @@ export default function Sidebar() {
             className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             to="/"
           >
-            Kingsley Amankwah
+            {user && user?.name}
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
@@ -42,8 +50,8 @@ export default function Sidebar() {
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
-              collapseShow
+              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded "
+              // + collapseShow
             }
           >
             {/* Collapse header */}
@@ -61,7 +69,7 @@ export default function Sidebar() {
                   <button
                     type="button"
                     className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                    onClick={() => setCollapseShow("hidden")}
+                    // onClick={() => setCollapseShow("hidden")}
                   >
                     <i className="fas fa-times"></i>
                   </button>
@@ -87,26 +95,26 @@ export default function Sidebar() {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li
-                className="items-center text-left text-xs capitalize py-3 font-bold block"
+                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
                 onClick={() => navigate("/home")}
               >
                 Dashboard
               </li>
               <li
-                className="items-center text-left text-xs capitalize py-3 font-bold block"
+                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
                 onClick={() => navigate("/profile")}
               >
                 Profile
               </li>
               <li
-                className="items-center text-left text-xs capitalize py-3 font-bold block"
+                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
                 onClick={() => navigate("/users")}
               >
                 Users
               </li>
               <li
-                className="items-center text-left text-xs capitalize py-3 font-bold block"
-                onClick={() => navigate("/profile")}
+                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
+                onClick={onLogout}
               >
                 Logout
               </li>
@@ -117,3 +125,5 @@ export default function Sidebar() {
     </>
   );
 }
+
+export default Sidebar;
