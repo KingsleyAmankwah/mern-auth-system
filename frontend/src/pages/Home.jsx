@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+// import { useSelector } from "react-redux";
 import HeaderStats from "../components/HeaderStats";
 import AdminNavbar from "../components/AdminNavbar";
 import Sidebar from "../components/Sidebar";
@@ -7,6 +7,7 @@ import Profile from "./Profile";
 import Users from "./Users";
 
 function Home() {
+  // const { user } = useSelector((state) => state.auth);
   return (
     <>
       <Sidebar />
