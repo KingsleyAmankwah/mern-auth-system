@@ -40,27 +40,6 @@ export const logout = createAction("auth/logout", () => {
   return {};
 });
 
-//Get user
-export const getUser = createAsyncThunk("auth/getUser", async (_, thunkAPI) => {
-  try {
-    return await authService.getUser();
-  } catch (error) {
-    return thunkAPI.rejectWithValue(extractErrorMessage(error));
-  }
-});
-
-//Get Login status
-export const getLoginStatus = createAsyncThunk(
-  "auth/loginStatus",
-  async (_, thunkAPI) => {
-    try {
-      return await authService.getLoginStatus();
-    } catch (error) {
-      thunkAPI.rejectWithValue(extractErrorMessage(error));
-    }
-  }
-);
-
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -92,34 +71,21 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
-      })
-
-      //Get user
-      .addCase(getUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getUser.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload;
-      })
-
-      // Get Login Status
-      .addCase(getLoginStatus.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getLoginStatus.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload;
-      })
-      .addCase(getLoginStatus.rejected, (state, action) => {
-        state.isLoggedIn = action.payload;
-        console.log(action.payload);
       });
+
+    // Get Login Status
+    // .addCase(getLoginStatus.pending, (state) => {
+    //   state.isLoading = true;
+    // })
+    // .addCase(getLoginStatus.fulfilled, (state, action) => {
+    //   state.isLoading = false;
+    //   state.isLoggedIn = action.payload;
+    // })
+    // .addCase(getLoginStatus.rejected, (state, action) => {
+    //   state.isLoggedIn = action.payload;
+    //   console.log(action.payload);
+    // });
   },
 });
 
-export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
-export const selectUser = (state) => state.auth.user;
 export default authSlice.reducer;
