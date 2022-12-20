@@ -5,6 +5,7 @@ import AdminNavbar from "../components/AdminNavbar";
 import Sidebar from "../components/Sidebar";
 import Profile from "./Profile";
 import Users from "./Users";
+import { PrivateRoute, AdminRoute } from "../components/PrivateRoute";
 
 function Home() {
   // const { user } = useSelector((state) => state.auth);
@@ -13,15 +14,24 @@ function Home() {
       <Sidebar />
 
       <div className="relative md:ml-64 bg-blueGray-100 font-[system-ui]">
-        <AdminNavbar />
-        {/* Header */}
-        <HeaderStats />
+        <AdminRoute>
+          <AdminNavbar />
+          {/* Header */}
+          <HeaderStats />
+        </AdminRoute>
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Routes>
             <Route path="profile" element={<Profile />}></Route>
           </Routes>
           <Routes>
-            <Route path="users" element={<Users />}></Route>
+            <Route
+              path="users"
+              element={
+                <PrivateRoute>
+                  <Users />
+                </PrivateRoute>
+              }
+            ></Route>
           </Routes>
         </div>
       </div>
