@@ -1,16 +1,16 @@
-// /*eslint-disable*/
-import React, { useEffect } from "react";
+/*eslint-disable*/
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 // import Profile from "../pages/Profile";
 
 // import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
-// import UserDropdown from "components/Dropdowns/UserDropdown.js";
-
-// const [collapseShow, setCollapseShow] = React.useState("hidden");
+import UserDropdown from "./UserDropdown.js";
+import { AdminRoute } from "./PrivateRoute";
 
 function Sidebar() {
+  const [collapseShow, setCollapseShow] = React.useState("hidden");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ function Sidebar() {
           <button
             className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
-            // onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
+            onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
             <i className="fas fa-bars"></i>
           </button>
@@ -45,13 +45,15 @@ function Sidebar() {
             <li className="inline-block relative">
               {/* <NotificationDropdown /> */}
             </li>
-            <li className="inline-block relative">{/* <UserDropdown /> */}</li>
+            <li className="inline-block relative">
+              <UserDropdown />
+            </li>
           </ul>
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded "
-              // + collapseShow
+              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
+              collapseShow
             }
           >
             {/* Collapse header */}
@@ -69,9 +71,9 @@ function Sidebar() {
                   <button
                     type="button"
                     className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                    // onClick={() => setCollapseShow("hidden")}
+                    onClick={() => setCollapseShow("hidden")}
                   >
-                    <i className="fas fa-times"></i>
+                    <i className="fas fa-times">Bars</i>
                   </button>
                 </div>
               </div>
@@ -94,24 +96,30 @@ function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li
-                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
-                onClick={() => navigate("/home")}
-              >
-                Dashboard
-              </li>
+              <AdminRoute>
+                <li
+                  className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
+                  onClick={() => navigate("/home")}
+                >
+                  Dashboard
+                </li>
+              </AdminRoute>
+
               <li
                 className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
                 onClick={() => navigate("/profile")}
               >
                 Profile
               </li>
-              <li
-                className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
-                onClick={() => navigate("/users")}
-              >
-                Users
-              </li>
+              <AdminRoute>
+                <li
+                  className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
+                  onClick={() => navigate("/users")}
+                >
+                  Users
+                </li>
+              </AdminRoute>
+
               <li
                 className="items-center cursor-pointer text-left text-xs capitalize py-3 font-bold block"
                 onClick={onLogout}
