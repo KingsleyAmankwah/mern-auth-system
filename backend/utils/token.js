@@ -31,4 +31,4 @@ const GenerateToken = (user) => {
   return { access_token, refresh_token, reset_token };
 };
 
-export default GenerateToken;
+module.exports = GenerateToken;
