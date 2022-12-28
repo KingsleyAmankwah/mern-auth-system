@@ -28,9 +28,9 @@ const register = asynchandler(async (req, res) => {
 });
 
 const login = asynchandler(async (req, res) => {
-  const { email, password } = req.body;
   try {
-    if (!email || !password) {
+    const { email, secret } = req.body;
+    if (!email || !secret) {
       res.status(400);
       throw new Error("Please add all fields");
     }
@@ -43,7 +43,7 @@ const login = asynchandler(async (req, res) => {
     }
 
     const passwordIsCorrect = await bcrypt.compare(
-      req.body.password,
+      req.body.secret,
       user.password
     );
 
