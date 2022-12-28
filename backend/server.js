@@ -13,6 +13,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors({ credentials: true, origin: true }));
 
+app.use("/auth", require("./routes/auth"));
+
 app.use(errorHandler);
 
 const Port = process.env.PORT;
