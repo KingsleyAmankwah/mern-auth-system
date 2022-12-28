@@ -29,11 +29,18 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "Tell us about yourself",
     },
+    token: {
+      type: String,
+      default: "",
+    },
+    reset_token: {
+      type: String,
+      default: null,
+    },
     role: {
       type: String,
-      required: true,
+      enum: ["subscriber", "admin"],
       default: "subscriber",
-      // subscriber, author, and admin (suspended)
     },
     isVerified: {
       type: Boolean,
