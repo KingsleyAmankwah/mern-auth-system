@@ -2,7 +2,7 @@ const asynchandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { default: GenerateToken } = require("../utils/token");
+const { GenerateToken } = require("../utils/token");
 
 const register = asynchandler(async (req, res) => {
   try {
@@ -81,7 +81,28 @@ const login = asynchandler(async (req, res) => {
   }
 });
 
+const logout = asynchandler(async (req, res) => {
+  const refresh_token = req.cookies?.refresh_token;
+  console.log(refresh_token);
+
+  try {
+    const user = await User.findOne({ token: refresh_token });
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found!");
+    }
+
+    await User.findByIdAndUpdate({ token: null });
+    res.clearCookie("refresh_token");
+    res.status(200).json("Logged out successfully");
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   register,
   login,
+  logout,
 };
