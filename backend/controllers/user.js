@@ -3,13 +3,15 @@ const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 
 const getUser = asynchandler(async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(400);
-    throw new Error(error);
-  }
+  // try {
+  //   const user = await User.findById(req.params.id);
+  //   res.status(200).json(user);
+  // } catch (error) {
+  //   res.status(400);
+  //   throw new Error(error);
+  // }
+
+  res.status(200).json(req.user);
 });
 
 const updateUser = asynchandler(async (req, res) => {
