@@ -14,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ credentials: true, origin: true }));
 
-app.use("/auth", require("./routes/auth"));
+app.use("/auth", require("./routes/authRoute"));
+app.use("/user", require("./routes/userRoute"));
 
 app.use(errorHandler);
 
