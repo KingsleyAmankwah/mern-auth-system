@@ -10,8 +10,8 @@ const register = asynchandler(async (req, res) => {
       throw new Error("User already exists!");
     }
 
-    const salt = bcrypt.genSalt(10);
-    const hashedPassword = bcrypt.hash(req.body.password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
     const newUser = new User({
       ...req.body,
