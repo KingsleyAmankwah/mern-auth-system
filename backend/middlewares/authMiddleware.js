@@ -36,7 +36,7 @@ const verifyAdmin = (req, res, next) => {
     if (req.user && req.user.role === "admin") {
       next();
     } else {
-      res.status(403);
+      res.status(401);
       throw new Error("You are not an authorized admin!");
     }
   });
@@ -44,10 +44,13 @@ const verifyAdmin = (req, res, next) => {
 
 const verifyUser = (req, res, next) => {
   protect(req, res, next, () => {
-    if (req.user.id === req.params.id || req.user.role === "admin") {
+    if (
+      (req.user && req.user.role === "subscriber") ||
+      (req.user && req.user.role === "admin")
+    ) {
       next();
     } else {
-      res.status(403);
+      res.status(401);
       throw new Error("You are not authorized!");
     }
   });
