@@ -2,16 +2,18 @@ const asynchandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 
-const getUser = asynchandler(async (req, res) => {
-  // try {
-  //   const user = await User.findById(req.params.id);
-  //   res.status(200).json(user);
-  // } catch (error) {
-  //   res.status(400);
-  //   throw new Error(error);
-  // }
-
+const getMe = asynchandler(async (req, res) => {
   res.status(200).json(req.user);
+});
+
+const getUser = asynchandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
 });
 
 const updateUser = asynchandler(async (req, res) => {
@@ -32,6 +34,10 @@ const changePassword = asynchandler(async (req, res) => {
   const { id } = req.user;
   const { password, newPassword } = req.body;
 
+  if (!password || !newPassword) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
   try {
     const user = await User.findById(id);
 
@@ -82,6 +88,7 @@ const deleteUser = asynchandler(async (req, res) => {
 
 module.exports = {
   getUser,
+  getMe,
   updateUser,
   changePassword,
   getUsers,
