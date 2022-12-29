@@ -6,20 +6,20 @@ const { GenerateToken } = require("../utils/token");
 const register = asynchandler(async (req, res) => {
   try {
     const userExists = await User.findOne({ email: req.body.email });
-    if (userExists) {
+    if (!userExists) {
+      const salt = await bcrypt.genSaltSync(10);
+      const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
+
+      const newUser = new User({
+        ...req.body,
+        password: hashedPassword,
+      });
+
+      await newUser.save();
+      res.status(200).send("User has been created.");
+    } else {
       throw new Error("User already exists!");
     }
-
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-    const newUser = new User({
-      ...req.body,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-    res.status(200).send("User has been created.");
   } catch (error) {
     res.status(400);
     throw new Error(error);
@@ -28,13 +28,12 @@ const register = asynchandler(async (req, res) => {
 
 const login = asynchandler(async (req, res) => {
   try {
-    const { email, secret } = req.body;
-    if (!email || !secret) {
+    if (!req.body.email || !req.body.password) {
       res.status(400);
       throw new Error("Please add all fields");
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
       res.status(404);
@@ -42,7 +41,7 @@ const login = asynchandler(async (req, res) => {
     }
 
     const passwordIsCorrect = await bcrypt.compare(
-      req.body.secret,
+      req.body.password,
       user.password
     );
 
@@ -92,7 +91,7 @@ const logout = asynchandler(async (req, res) => {
       throw new Error("User not found!");
     }
 
-    await User.findByIdAndUpdate({ token: null });
+    await User.findByIdAndUpdate(user._id, { token: null });
     res.clearCookie("refresh_token");
     res.status(200).json("Logged out successfully");
   } catch (error) {
