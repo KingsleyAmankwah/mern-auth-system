@@ -5,6 +5,7 @@ const {
   getUser,
   getUsers,
   changePassword,
+  getMe,
 } = require("../controllers/user");
 const { verifyUser, verifyAdmin } = require("../middlewares/authMiddleware");
 
@@ -14,10 +15,12 @@ router.put("/:id", verifyUser, updateUser);
 
 router.delete("/:id", verifyAdmin, deleteUser);
 
-router.get("/me", verifyUser, getUser);
+router.get("/:id", verifyUser, getUser);
+
+router.get("/me", verifyUser, getMe);
 
 router.get("/", verifyAdmin, getUsers);
 
-router.patch("/password", changePassword);
+router.patch("/password", verifyUser, changePassword);
 
 module.exports = router;
