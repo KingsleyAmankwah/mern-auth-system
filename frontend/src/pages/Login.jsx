@@ -1,11 +1,14 @@
+/*eslint-disable*/
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { login } from "../features/auth/authSlice";
+import { useStateValue } from "../context/StateProvider";
+import { LOGIN } from "../features/auth";
 
 function Login() {
+  const [, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,28 +24,30 @@ function Login() {
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { isLoading } = useSelector((state) => state.auth);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = {
+    const credentials = {
       email,
       password,
     };
 
-    dispatch(login(userData))
-      .unwrap()
-      .then((user) => {
-        toast.success(`Logged in as ${user.name}`);
-        navigate("/home");
-      })
-      .catch(toast.error);
+    setLoading(true);
+    LOGIN(credentials, setLoading, (data) => {
+      dispatch({
+        type: "SET_USER",
+        user: data.data,
+      });
+    });
+    // .unwrap()
+    // .then((user) => {
+    //   toast.success(`Logged in as ${user.name}`);
+    //   navigate("/home");
+    // })
   };
 
-  if (isLoading) {
+  if (loading) {
     return <Spinner />;
   }
 
