@@ -1,9 +1,11 @@
+/*eslint-disable*/
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { register } from "../features/auth/authSlice";
+// import { register } from "../features/auth/authSlice";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -23,35 +25,35 @@ function Register() {
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state) => state.auth);
+  // const { isLoading } = useSelector((state) => state.auth);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (password !== password2) {
-      toast.error("The two passwords do not match!");
-    } else {
-      const userData = {
-        name,
-        email,
-        password,
-      };
+  //   if (password !== password2) {
+  //     toast.error("The two passwords do not match!");
+  //   } else {
+  //     const userData = {
+  //       name,
+  //       email,
+  //       password,
+  //     };
 
-      dispatch(register(userData))
-        .unwrap()
-        .then((user) => {
-          toast.success(`Registered new user - ${user.name}`);
-          navigate("/sign-in");
-        })
-        .catch(toast.error);
-    }
-  };
+  //     dispatch(register(userData))
+  //       .unwrap()
+  //       .then((user) => {
+  //         toast.success(`Registered new user - ${user.name}`);
+  //         navigate("/sign-in");
+  //       })
+  //       .catch(toast.error);
+  //   }
+  // };
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <>
@@ -70,7 +72,7 @@ function Register() {
                 </div>
                 <form
                   className="sm:px-8 sm:pt-6 pb-8 mb-4 bg-white rounded"
-                  onSubmit={onSubmit}
+                  // onSubmit={onSubmit}
                 >
                   <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
