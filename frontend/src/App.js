@@ -1,28 +1,18 @@
+/*eslint-disable*/
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassowrd";
-import LandingPage from "./pages/LandingPage";
-import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   return (
     <div className="App m-0 p-0 w-full h-full">
       <Router>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="*"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/sign-in" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
