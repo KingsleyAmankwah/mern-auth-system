@@ -39,11 +39,11 @@ function Login() {
         type: "SET_USER",
         user: data.data,
       });
+      navigate("/");
     });
     // .unwrap()
     // .then((user) => {
     //   toast.success(`Logged in as ${user.name}`);
-    //   navigate("/home");
     // })
   };
 
