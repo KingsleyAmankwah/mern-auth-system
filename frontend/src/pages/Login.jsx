@@ -38,13 +38,13 @@ function Login() {
       dispatch({
         type: "SET_USER",
         user: data.data,
-      });
-      navigate("/");
+      })
+        .unwrap()
+        .then((user) => {
+          navigate("/");
+          toast.success(`Logged in as ${user.email}`);
+        });
     });
-    // .unwrap()
-    // .then((user) => {
-    //   toast.success(`Logged in as ${user.name}`);
-    // })
   };
 
   if (loading) {
