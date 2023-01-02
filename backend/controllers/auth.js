@@ -2,6 +2,7 @@ const asynchandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { GenerateToken } = require("../utils/token");
+const jwt = require("jsonwebtoken");
 
 const register = asynchandler(async (req, res) => {
   try {
@@ -99,8 +100,47 @@ const logout = asynchandler(async (req, res) => {
   }
 });
 
+const getRefreshToken = asynchandler(async (req, res) => {
+  try {
+    const cookies = req.cookies;
+
+    if (!cookies?.refresh_token) {
+      res.status(401);
+      throw new Error("Unauthorized");
+    }
+
+    const refresh_token = cookies.refresh_token;
+    console.log("token>>>", refresh_token);
+
+    const user = await User.findOne({ token: refresh_token });
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    const decoded = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);
+
+    //generate access token
+    const access_token = jwt.sign(
+      { id: decoded.id, role: decoded.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    const { password, token, ...userData } = user._doc;
+
+    //append access token to userData
+    userData.access_token = access_token;
+    res.status(201).json({ data: userData });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   register,
   login,
   logout,
+  getRefreshToken,
 };
