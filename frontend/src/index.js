@@ -2,8 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import { StateProvider } from "./context/StateProvider";
-import { reducer } from "./context/reducer";
 import { initialState } from "./context/initialState";
+import reducer from "./context/reducer";
 import "./index.css";
 
 const container = document.getElementById("root");
