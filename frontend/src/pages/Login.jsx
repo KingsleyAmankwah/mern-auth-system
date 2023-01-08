@@ -35,15 +35,16 @@ function Login() {
 
     setLoading(true);
     LOGIN(credentials, setLoading, (data) => {
+      setLoading(false);
       dispatch({
         type: "SET_USER",
         user: data.data,
-      })
-        .unwrap()
-        .then((user) => {
-          navigate("/");
-          toast.success(`Logged in as ${user.email}`);
-        });
+      });
+      // .unwrap()
+      // .then((user) => {
+      navigate("/");
+      //   toast.success(`Logged in as ${user.email}`);
+      // });
     });
   };
 
