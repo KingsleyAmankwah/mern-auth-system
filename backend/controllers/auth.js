@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const { generateToken } = require("../utils");
 
 // Register User
@@ -38,11 +39,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Send HTTP-only cookie
   res.cookie("token", token, {
-    path: "/",
     httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400), // 1 day
-    sameSite: "none",
     secure: true,
+    sameSite: "none",
   });
 
   if (user) {
@@ -95,11 +94,9 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && passwordIsCorrect) {
     // Send HTTP-only cookie
     res.cookie("token", token, {
-      path: "/",
       httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), // 1 day
-      sameSite: "none",
       secure: true,
+      sameSite: "none",
     });
 
     const { _id, name, email, phone, bio, photo, role, isVerified } = user;
