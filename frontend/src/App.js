@@ -1,13 +1,24 @@
-import React from "react";
-import "./App.css";
-
+/*eslint-disable*/
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   return (
-    <div className="App font-[system-ui]">
-      <header className="App-header text-4xl font-extrabold">
-        {" "}
-        Hello frontend
-      </header>
+    <div className="App m-0 p-0 w-full h-full">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
+        </Routes>
+      </Router>
+
+      <ToastContainer />
     </div>
   );
 }
