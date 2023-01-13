@@ -23,7 +23,7 @@ app.use(
 );
 
 app.use("/auth", require("./routes/authRoute"));
-app.use("/auth", require("./routes/userRoute"));
+// app.use("/auth", require("./routes/userRoute"));
 
 app.use(errorHandler);
 
