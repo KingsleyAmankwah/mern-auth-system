@@ -1,12 +1,12 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from "react";
 // import { BiLogIn } from "react-icons/bi";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import Spinner from "../../components/Spinner";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
 // import { validateEmail } from "../../redux/auth/authService";
-// import { login, RESET } from "../../redux/auth/authSlice";
+import { login, RESET } from "../features/auth/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -22,43 +22,44 @@ function Login() {
       [e.target.name]: e.target.value,
     }));
   };
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //   const { isLoading, isLoggedIn, isSuccess, isError } = useSelector(
-  //     (state) => state.auth
-  //   );
+  const { isLoading, isLoggedIn, isSuccess, isError } = useSelector(
+    (state) => state.auth
+  );
 
-  //   const loginUser = async (e) => {
-  //     e.preventDefault();
+  const loginUser = async (e) => {
+    e.preventDefault();
 
-  //     if (!email || !password) {
-  //       return toast.error("All fields are required");
-  //     }
+    if (!email || !password) {
+      return toast.error("All fields are required");
+    }
 
-  //     if (!validateEmail(email)) {
-  //       return toast.error("Please enter a valid email");
-  //     }
+    //     if (!validateEmail(email)) {
+    //       return toast.error("Please enter a valid email");
+    //     }
 
-  //     const userData = {
-  //       email,
-  //       password,
-  //     };
+    const userData = {
+      email,
+      password,
+    };
 
-  //     // console.log(userData);
-  //     await dispatch(login(userData));
-  //   };
+    console.log(userData);
+    await dispatch(login(userData));
+  };
 
-  //   useEffect(() => {
-  //     if (isSuccess && isLoggedIn) {
-  //       navigate("/profile");
-  //     }
+  useEffect(() => {
+    if (isSuccess && isLoggedIn) {
+      navigate("/profile");
+    }
 
-  //     dispatch(RESET());
-  //   }, [isLoggedIn, isSuccess, dispatch, navigate, isError]);
+    dispatch(RESET());
+  }, [isLoggedIn, isSuccess, dispatch, navigate, isError]);
 
   return (
     <>
+      {isLoading && <Spinner />}
       <section className="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full bg-blueGray-800  bg-full bg-center bg-cover">
         <div className="container py-[5rem] mx-auto">
           <div className="flex justify-center items-center h-full px-6">
@@ -72,7 +73,7 @@ function Login() {
                 </div>
                 <form
                   className="sm:px-8 sm:pt-6 pb-8 mb-4 bg-white rounded"
-                  //   onSubmit={loginUser}
+                  onSubmit={loginUser}
                 >
                   <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
