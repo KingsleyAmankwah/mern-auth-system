@@ -1,10 +1,10 @@
 /*eslint-disable*/
-
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-// import Spinner from "../components/Spinner";
+import Spinner from "../components/Spinner";
+import { register } from "../features/auth/authSlice";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -24,49 +24,50 @@ function Register() {
   };
 
   const navigate = useNavigate();
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  //   const { isLoading, isLoggedIn, isSuccess } = useSelector(
-  //     (state) => state.auth
-  //   );
+  const { isLoading, isLoggedIn, isSuccess } = useSelector(
+    (state) => state.auth
+  );
 
-  //   const registerUser = async (e) => {
-  //     e.preventDefault();
+  const registerUser = async (e) => {
+    e.preventDefault();
 
-  //     if (!name || !email || !password) {
-  //       return toast.error("All fields are required");
-  //     }
-  //     if (password.length < 6) {
-  //       return toast.error("Password must be up to 6 characters");
-  //     }
-  //     if (!validateEmail(email)) {
-  //       return toast.error("Please enter a valid email");
-  //     }
-  //     if (password !== password2) {
-  //       return toast.error("Passwords do not match");
-  //     }
+    if (!name || !email || !password) {
+      return toast.error("All fields are required");
+    }
+    if (password.length < 6) {
+      return toast.error("Password must be up to 6 characters");
+    }
+    //     if (!validateEmail(email)) {
+    //       return toast.error("Please enter a valid email");
+    //     }
+    if (password !== password2) {
+      return toast.error("Passwords do not match");
+    }
 
-  //     const userData = {
-  //       name,
-  //       email,
-  //       password,
-  //     };
+    const userData = {
+      name,
+      email,
+      password,
+    };
 
-  //     // console.log(userData);
-  //     await dispatch(register(userData));
-  //     // await dispatch(sendVerificationEmail());
-  //   };
+    console.log(userData);
+    await dispatch(register(userData));
+    //     // await dispatch(sendVerificationEmail());
+  };
 
-  //   useEffect(() => {
-  //     if (isSuccess && isLoggedIn) {
-  //       navigate("/profile");
-  //     }
+  useEffect(() => {
+    if (isSuccess && isLoggedIn) {
+      navigate("/profile");
+    }
 
-  //     dispatch(RESET());
-  //   }, [isLoggedIn, isSuccess, dispatch, navigate]);
+    // dispatch(RESET());
+  }, [isLoggedIn, isSuccess, dispatch, navigate]);
 
   return (
     <>
+      {isLoading && <Spinner />}
       <section className="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full bg-blueGray-800 bg-full bg-center bg-cover">
         <div className="container py-[5rem] mx-auto">
           <div className="flex justify-center items-center h-full px-6">
@@ -82,7 +83,7 @@ function Register() {
                 </div>
                 <form
                   className="sm:px-8 sm:pt-6 pb-8 mb-4 bg-white rounded"
-                  //   onSubmit={registerUser}
+                  onSubmit={registerUser}
                 >
                   <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
