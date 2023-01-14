@@ -28,11 +28,11 @@ const userSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      default: "+234",
+      default: "+233",
     },
     bio: {
       type: String,
-      default: "bio",
+      default: "Tell us about yourself...",
     },
     role: {
       type: String,
