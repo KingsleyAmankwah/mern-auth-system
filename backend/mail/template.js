@@ -13,7 +13,7 @@ const welcomeText = (user) => {
   
   NB! Make sure to change your password after your first login. <br/> <br/>
 
-  Login here: ${site}/admin <br/>
+  Login here: ${site}/login <br/>
   Or visit blog here: ${site}/ <br/> <br/>
   
   Regards,
@@ -35,7 +35,7 @@ const WelcomeHTML = (user) => {
     
     <b>NB!</b> Make sure to change your password after your first login.   <br/> <br/>
 
-    Login here: <a href="${site}/admin">${site}/admin</a> <br/>
+    Login here: <a href="${site}/login">${site}/login</a> <br/>
     Or visit blog here: <a href="${site}/">${site}/</a> <br/> <br/>
     
     Regards,<br/>
