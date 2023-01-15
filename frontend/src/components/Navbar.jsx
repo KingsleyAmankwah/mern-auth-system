@@ -9,6 +9,7 @@ import { logout, RESET } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useRedirectUser from "../hook/useRedirectUser";
 import { getUser } from "../features/user/userSlice";
+import Spinner from "./Spinner";
 
 const Navbar = () => {
   useRedirectUser("/login");
@@ -39,7 +40,7 @@ const Navbar = () => {
   );
 };
 const UserProfile = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, isLoading } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ const UserProfile = () => {
   const showMenu = () => {
     setIsMenu((menu) => !menu);
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="flex items-center gap-4 group relative">
@@ -88,7 +91,7 @@ const UserProfile = () => {
               <p>{user && user.name}</p>
             </div>
             <div className="w-full h-[2px] my-2 bg-active-bg"></div>
-            <Link href="/admin/settings" onClick={showMenu}>
+            <Link href="/profile" onClick={showMenu}>
               <div className="flex items-center gap-2 text-active cursor-pointer hover:bg-active-bg p-2">
                 <FiSettings className="text-lg" />
                 <p>settings</p>
