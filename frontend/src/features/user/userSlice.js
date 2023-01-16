@@ -79,7 +79,7 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
-        toast.success("User Updated");
+        toast.success("Profile Updated");
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.message = action.payload;
