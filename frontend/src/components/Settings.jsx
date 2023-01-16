@@ -2,7 +2,8 @@
 import React from "react";
 import { useLayoutEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../features/user/userSlice";
 
 export default function Settings() {
   const { user } = useSelector((state) => state.user);
@@ -31,6 +32,28 @@ export default function Settings() {
   const handleImageChange = (e) => {
     setProfileImage(e.target.files[0]);
     setImagePreview(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const dispatch = useDispatch();
+
+  
+  const saveProfile = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Save profile to MongoDB
+      const userData = {
+        name: profile.name,
+        phone: profile.phone,
+        bio: profile.bio,
+        // photo: profileImage ? imageURL : profile.photo,
+      };
+
+      dispatch(updateUser(userData));
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
   };
 
   useLayoutEffect(() => {
@@ -70,7 +93,7 @@ export default function Settings() {
               alt="User Profile"
             />
           </div>
-          <form>
+          <form onSubmit={saveProfile}>
             <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               User Information
             </h6>
@@ -85,6 +108,7 @@ export default function Settings() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     value={profile?.name}
                     onChange={handleInputChange}
@@ -101,6 +125,7 @@ export default function Settings() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     value={profile?.email}
                     onChange={handleInputChange}
@@ -125,9 +150,10 @@ export default function Settings() {
                     Phone
                   </label>
                   <input
+                    type="text"
+                    name="phone"
                     value={profile?.phone}
                     onChange={handleInputChange}
-                    type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -150,6 +176,7 @@ export default function Settings() {
                   </label>
                   <textarea
                     type="text"
+                    name="bio"
                     value={profile?.bio}
                     onChange={handleInputChange}
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
