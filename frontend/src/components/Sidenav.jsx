@@ -2,7 +2,6 @@
 import { FiHome, FiSettings, FiUsers } from "react-icons/fi";
 // import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 // import { FaClipboardList } from "react-icons/fa";
 // import { CgListTree } from "react-icons/cg";
 // import { BsCalendarEvent } from "react-icons/bs";
@@ -30,6 +29,12 @@ export const Navs = [
     icon: <FiSettings />,
     protected: false,
     link: "profile",
+  },
+  {
+    name: "Settings",
+    icon: <FiSettings />,
+    protected: false,
+    link: "change-password",
   },
 ];
 function Sidenav({ page }) {
