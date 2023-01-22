@@ -275,10 +275,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const resetUrl = `${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
 
   // Send Email
-  const subject = "Password Reset Request - AUTH:Z";
+  const subject = "Password Reset Request...";
   const send_to = user.email;
   const sent_from = process.env.EMAIL_USER;
-  const reply_to = "noreply@king.com";
+  const reply_to = "noreply@mernAuthSystem.com";
   const template = "forgotPassword";
   const name = user.name;
   const link = resetUrl;
