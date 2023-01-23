@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { register } from "../features/auth/authSlice";
+import { sendVerificationEmail } from "../features/user/userSlice";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ function Register() {
 
     console.log(userData);
     await dispatch(register(userData));
-    //     // await dispatch(sendVerificationEmail());
+    await dispatch(sendVerificationEmail());
   };
 
   useEffect(() => {
