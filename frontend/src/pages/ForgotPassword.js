@@ -1,8 +1,26 @@
 import { useState } from "react";
-// import Spinner from "../components/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../components/Spinner";
+import { forgotPassword } from "../features/user/userSlice";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.user);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email,
+    };
+
+    dispatch(forgotPassword(userData));
+    setEmail("");
+  };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <>
@@ -22,7 +40,7 @@ function ForgotPassword() {
                 </div>
                 <form
                   className="sm:px-8 pt-6 pb-8 mb-4 bg-white rounded"
-                  // onSubmit={onSubmit}
+                  onSubmit={onSubmit}
                 >
                   <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700">
