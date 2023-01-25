@@ -54,6 +54,18 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+//! change Password
+export const changePassword = createAsyncThunk(
+  "",
+  async (userData, thunkAPI) => {
+    try {
+      return await userService.changePassword(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
 //! forgot Password
 export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
@@ -154,6 +166,21 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.message = action.payload;
+      })
+
+      //? change Password
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload;
+        toast.success(action.payload);
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload;
+        toast.error(action.payload);
       })
       //? forgotPassword
       .addCase(forgotPassword.pending, (state) => {
