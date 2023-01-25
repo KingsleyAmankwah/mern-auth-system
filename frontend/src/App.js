@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Layout from "./components/Layout";
-import Profile from "./pages/Profile";
+import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 import {
@@ -45,6 +46,14 @@ function App() {
             element={
               <Layout>
                 <Profile />
+              </Layout>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Layout>
+                <Settings />
               </Layout>
             }
           />
