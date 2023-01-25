@@ -220,14 +220,13 @@ const changePassword = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
-
-  if (!oldPassword || !password) {
-    res.status(400);
-    throw new Error("Please enter old and new password");
-  }
-
   //? Check if old password is correct
   const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+
+  if (!passwordIsCorrect) {
+    res.status(400);
+    throw new Error("Current password is incorrect");
+  }
 
   // Save new password
   if (user && passwordIsCorrect) {
