@@ -8,14 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiLogOutCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, RESET } from "../features/auth/authSlice";
+import { FaUserLock } from "react-icons/fa";
 // import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 export const Navs = [
   {
     name: "Dashboard",
     icon: <FiHome />,
-    protected: false,
-    link: "dashboard",
+    protected: true,
+    link: "",
   },
 
   {
@@ -26,7 +27,7 @@ export const Navs = [
   },
   {
     name: "Profile",
-    icon: <FiSettings />,
+    icon: <FaUserLock />,
     protected: false,
     link: "profile",
   },
@@ -34,7 +35,7 @@ export const Navs = [
     name: "Settings",
     icon: <FiSettings />,
     protected: false,
-    link: "change-password",
+    link: "settings",
   },
 ];
 function Sidenav({ page }) {
@@ -59,18 +60,18 @@ function Sidenav({ page }) {
             if (nav.protected && user && user.role !== "admin") return;
 
             return (
-              <a href={`${nav.link}`} key={index}>
+              <Link to={`${nav.link}`} key={index}>
                 <div
                   className={`flex gap-4 items-center cursor-pointer ${
                     page === nav.name
-                      ? "hover:text-white hover:bg-primary bg-active-bg text-active"
+                      ? "hover:text-white hover:bg-blue-700 bg-active-bg text-active"
                       : "text-active hover:bg-active-bg hover:text-active"
                   } py-2 px-5 w-full rounded-full transition-all duration-75 ease-in-out`}
                 >
                   {nav.icon}
                   <p className="">{nav.name}</p>
                 </div>
-              </a>
+              </Link>
             );
           })}
           <div
