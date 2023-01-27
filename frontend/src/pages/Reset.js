@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdPassword } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Card from "../../components/card/Card";
-import Loader from "../../components/loader/Loader";
-import PasswordInput from "../../components/passwordInput/PasswordInput";
-import { RESET, resetPassword } from "../../redux/features/auth/authSlice";
-import styles from "./auth.module.scss";
+import Spinner from "../components/Spinner";
+import { resetPassword } from "../features/user/userSlice";
 
 const initialState = {
   password: "",
@@ -21,9 +18,7 @@ const Reset = () => {
   const { resetToken } = useParams();
   console.log(resetToken);
 
-  const { isLoading, isLoggedIn, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,55 +41,54 @@ const Reset = () => {
       password,
     };
 
-    await dispatch(resetPassword({ userData, resetToken }));
+    dispatch(resetPassword({ userData, resetToken }));
   };
 
-  useEffect(() => {
-    if (isSuccess && message.includes("Reset Successful")) {
-      navigate("/login");
-    }
+  // useEffect(() => {
+  //   if ( message.includes("Reset Successful")) {
+  //     navigate("/login");
+  //   }
 
-    dispatch(RESET());
-  }, [dispatch, navigate, message, isSuccess]);
+  //   dispatch(RESET());
+  // }, [dispatch, navigate, message]);
 
   return (
-    <div className={`container ${styles.auth}`}>
-      {isLoading && <Loader />}
-      <Card>
-        <div className={styles.form}>
-          <div className="--flex-center">
-            <MdPassword size={35} color="#999" />
-          </div>
-          <h2>Reset Password</h2>
+    <div>
+      {isLoading && <Spinner />}
 
-          <form onSubmit={reset}>
-            <PasswordInput
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={handleInputChange}
-            />
-            <PasswordInput
-              placeholder="Confirm Password"
-              name="password2"
-              value={password2}
-              onChange={handleInputChange}
-            />
-
-            <button type="submit" className="--btn --btn-primary --btn-block">
-              Reset Password
-            </button>
-            <div className={styles.links}>
-              <p>
-                <Link to="/">- Home</Link>
-              </p>
-              <p>
-                <Link to="/login">- Login</Link>
-              </p>
-            </div>
-          </form>
+      <div>
+        <div className="--flex-center">
+          <MdPassword size={35} color="#999" />
         </div>
-      </Card>
+        <h2>Reset Password</h2>
+
+        <form onSubmit={reset}>
+          <input
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handleInputChange}
+          />
+          <input
+            placeholder="Confirm Password"
+            name="password2"
+            value={password2}
+            onChange={handleInputChange}
+          />
+
+          <button type="submit" className="--btn --btn-primary --btn-block">
+            Reset Password
+          </button>
+          <div>
+            <p>
+              <Link to="/">- Home</Link>
+            </p>
+            <p>
+              <Link to="/login">- Login</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
