@@ -16,7 +16,7 @@ export const Navs = [
     name: "Dashboard",
     icon: <FiHome />,
     protected: true,
-    link: "",
+    link: "dashboard",
   },
 
   {
@@ -38,7 +38,7 @@ export const Navs = [
     link: "settings",
   },
 ];
-function Sidenav({ page }) {
+function Sidenav() {
   const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -60,13 +60,9 @@ function Sidenav({ page }) {
             if (nav.protected && user && user.role !== "admin") return;
 
             return (
-              <Link to={`${nav.link}`} key={index}>
+              <Link to={`/${nav.link}`} key={index}>
                 <div
-                  className={`flex gap-4 items-center cursor-pointer ${
-                    page === nav.name
-                      ? "hover:text-white hover:bg-blue-700 bg-active-bg text-active"
-                      : "text-active hover:bg-active-bg hover:text-active"
-                  } py-2 px-5 w-full rounded-full transition-all duration-75 ease-in-out`}
+                  className={`flex gap-4 items-center cursor-pointer py-2 px-5 w-full rounded-full transition-all duration-75 ease-in-out`}
                 >
                   {nav.icon}
                   <p className="">{nav.name}</p>
