@@ -9,6 +9,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Layout from "./components/Layout";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
+import Users from "./components/Users";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 import {
@@ -19,6 +20,7 @@ import {
 import { getUser } from "./features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +44,14 @@ function App() {
           <Route path="/reset-password" element={<ForgotPassword />} />
 
           <Route
+            path="/dashboard"
+            element={
+              <Layout>
+                <Dashboard />
+              </Layout>
+            }
+          />
+          <Route
             path="/profile"
             element={
               <Layout>
@@ -54,6 +64,14 @@ function App() {
             element={
               <Layout>
                 <Settings />
+              </Layout>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <Layout>
+                <Users />
               </Layout>
             }
           />
