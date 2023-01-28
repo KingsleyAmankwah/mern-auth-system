@@ -56,7 +56,7 @@ const UserProfile = () => {
         onClick={showMenu}
         className="flex flex-col items-end font-sans cursor-pointer"
       >
-        <p className="text-active">{user && user.name}</p>
+        <p className="text-active hidden lg:flex">{user && user.name}</p>
         <p className="text-[#888A91] text-sm capitalize">{user && user.role}</p>
       </div>
       <div
