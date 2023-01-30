@@ -12,6 +12,15 @@ State management - Redux toolkit
 
 ```
 
+## :rocket: Technologies
+
+The following tools were used in this project:
+
+- [React.js](https://reactjs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Redux](https://redux.js.org/)
+- [TailwindCSS](https://tailwindcss.com)
+
 ## Usage
 
 Rename the .envexample to .env and add your MONGO_URI
