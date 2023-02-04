@@ -8,6 +8,9 @@ import { updateUser } from "../features/user/userSlice";
 export default function Profile() {
   const { user } = useSelector((state) => state.user);
 
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+  const upload_preset = process.env.REACT_APP_UPLOAD_PRESET;
+
   const initialState = {
     name: user?.name || "",
     email: user?.email || "",
@@ -38,14 +41,37 @@ export default function Profile() {
 
   const saveProfile = async (e) => {
     e.preventDefault();
+    let imageURL;
 
     try {
+      if (
+        profileImage !== null &&
+        (profileImage.type === "image/jpeg" ||
+          profileImage.type === "image/jpg" ||
+          profileImage.type === "image/png")
+      ) {
+        const image = new FormData();
+        image.append("file", profileImage);
+        // image.append("cloud_name", cloud_name);
+        image.append("upload_preset", upload_preset);
+
+        // Save image to Cloudinary
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+          { method: "POST", body: image }
+        );
+
+        const imgData = await response.json();
+        // console.log(imgData);
+        imageURL = imgData.url.toString();
+      }
+
       // Save profile to MongoDB
       const userData = {
         name: profile.name,
         phone: profile.phone,
         bio: profile.bio,
-        // photo: profileImage ? imageURL : profile.photo,
+        photo: profileImage ? imageURL : profile.photo,
       };
 
       dispatch(updateUser(userData));
