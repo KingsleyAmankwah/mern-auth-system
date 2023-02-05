@@ -3,6 +3,7 @@ import React from "react";
 import { useLayoutEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { updateUser } from "../features/user/userSlice";
 
 export default function Profile() {
@@ -43,12 +44,17 @@ export default function Profile() {
     e.preventDefault();
     let imageURL;
 
+    const size = profileImage.size / 1024 / 1024;
+
+    if (size > 1) {
+      return toast.error("File size should be less than 1 MB");
+    }
+
     try {
       if (
-        profileImage !== null &&
-        (profileImage.type === "image/jpeg" ||
-          profileImage.type === "image/jpg" ||
-          profileImage.type === "image/png")
+        profileImage.type === "image/jpeg" ||
+        profileImage.type === "image/jpg" ||
+        profileImage.type === "image/png"
       ) {
         const image = new FormData();
         image.append("file", profileImage);
@@ -64,6 +70,8 @@ export default function Profile() {
         const imgData = await response.json();
         // console.log(imgData);
         imageURL = imgData.url.toString();
+      } else {
+        return toast.error("File type should be JPEG, JPG, or PNG");
       }
 
       // Save profile to MongoDB
