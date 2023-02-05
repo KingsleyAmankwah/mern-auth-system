@@ -46,8 +46,8 @@ export default function Profile() {
 
     const size = profileImage.size / 1024 / 1024;
 
-    if (size > 1) {
-      return toast.error("File size should be less than 1 MB");
+    if (size > 2) {
+      return toast.error("File size should be less than 2 MB");
     }
 
     try {
