@@ -38,7 +38,7 @@ export const Navs = [
     link: "settings",
   },
 ];
-function Sidenav() {
+function Sidenav({ open }) {
   const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -51,7 +51,11 @@ function Sidenav() {
   };
 
   return (
-    <div className="bg-white px-4 h-[90vh] w-[20%] flex items-center justify-between">
+    <div
+      className={`${
+        open ? "block" : "hidden"
+      } md:block bg-white px-4 h-[90vh] w-64 flex items-center justify-between`}
+    >
       <div className="w-[85%] mx-auto h-full flex flex-col justify-between items-center pt-20">
         <div className=" w-full h-[50vh] flex flex-col gap-2">
           {/* Navigations */}
