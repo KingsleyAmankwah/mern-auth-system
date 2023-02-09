@@ -21,6 +21,7 @@ import { getUser } from "./features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Dashboard from "./components/Dashboard";
+import Test from "./components/Test";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ForgotPassword />} />
+          <Route path="/test" element={<Test />} />
 
           <Route
             path="/dashboard"
