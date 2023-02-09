@@ -13,9 +13,7 @@ function Layout({ children }) {
           <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
           <div className="flex">
             <Sidenav open={sidebarOpen} />
-            <div className="min-h-[90vh] h-[90vh] w-full py-3 px-5">
-              {children}
-            </div>
+            <div className="h-full w-full py-3 px-5">{children}</div>
           </div>
         </div>
       </main>
