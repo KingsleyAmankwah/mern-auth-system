@@ -11,18 +11,27 @@ import useRedirectUser from "../hook/useRedirectUser";
 import { getUser } from "../features/user/userSlice";
 import Spinner from "./Spinner";
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
+  // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
+
+  // const toggleSidenav = () => {
+  //   setIsSidenavOpen(!isSidenavOpen);
+  // };
+
   useRedirectUser("/login");
   return (
     <div className="bg-white py-2 px-4 w-screen h-[10vh] flex items-center z-40">
       {/* Brand */}
       <div className="flex justify-center items-center w-[20%] gap-5">
-        <p className="font-[500] text-sm cursor-pointer">Mern Auth System</p>
+        <p className="font-[500] text-sm cursor-pointer"> Auth System</p>
       </div>
       {/* main */}
       <div className="flex justify-end items-center w-[100%]">
         <UserProfile />
       </div>
+      <button className="text-sm block md:hidden" onClick={toggleSidebar}>
+        Open Sidebar
+      </button>
     </div>
   );
 };
@@ -38,7 +47,7 @@ const UserProfile = () => {
 
   const logoutUser = async () => {
     dispatch(RESET());
-    await dispatch(logout());
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -57,7 +66,9 @@ const UserProfile = () => {
         className="flex flex-col items-end font-sans cursor-pointer"
       >
         <p className="text-active hidden lg:flex">{user && user.name}</p>
-        <p className="text-[#888A91] text-sm capitalize">{user && user.role}</p>
+        <p className="text-[#888A91] text-sm capitalize hidden lg:flex">
+          {user && user.role}
+        </p>
       </div>
       <div
         className="w-10 h-10 flex items-center justify-center border border-active-bg rounded-full cursor-pointer"
