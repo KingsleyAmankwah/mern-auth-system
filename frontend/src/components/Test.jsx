@@ -2,11 +2,7 @@ import React, { useState } from "react";
 
 function Sidebar({ open }) {
   return (
-    <div
-      className={`${
-        open ? "block" : "hidden"
-      } md:block bg-gray-700 w-64 h-full`}
-    >
+    <div className={`${open ? "block" : "hidden"} bg-gray-700 w-64 h-full`}>
       <h3 className="text-white font-bold p-4">Sidebar</h3>
       <p className="text-white p-4">Welcome to the sidebar!</p>
     </div>
@@ -29,7 +25,7 @@ function Navbar({ toggleSidebar }) {
   );
 }
 
-function Test() {
+function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -48,4 +44,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default App;
