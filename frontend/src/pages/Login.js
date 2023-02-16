@@ -45,7 +45,6 @@ function Login() {
       password,
     };
 
-    console.log(userData);
     await dispatch(login(userData));
   };
 
