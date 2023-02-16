@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useRedirectUser from "../hook/useRedirectUser";
 import { getUser } from "../features/user/userSlice";
 import Spinner from "./Spinner";
+import { HiOutlineMenu } from "react-icons/hi";
 
 const Navbar = ({ toggleSidebar }) => {
   // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
@@ -26,12 +27,13 @@ const Navbar = ({ toggleSidebar }) => {
         <p className="font-[500] text-sm cursor-pointer"> Auth System</p>
       </div>
       {/* main */}
-      <div className="flex justify-end items-center w-[100%]">
+      <div className="hidden md:flex justify-end items-center w-[100%]">
         <UserProfile />
       </div>
-      <button className="text-sm block md:hidden" onClick={toggleSidebar}>
-        Open Sidebar
-      </button>
+
+      <div className="block ml-auto md:hidden" onClick={toggleSidebar}>
+        <HiOutlineMenu className="w-6 h-6" />
+      </div>
     </div>
   );
 };
