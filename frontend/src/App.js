@@ -19,9 +19,10 @@ import {
 } from "./features/auth/authSlice";
 import { getUser } from "./features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "./components/Dashboard";
 import Test from "./components/Test";
+import NoInternet from "./components/NoInternet";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,52 +36,74 @@ function App() {
     }
   }, [dispatch, isLoggedIn, user]);
 
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleNetworkChange = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
+
+    return () => {
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
+    };
+  }, []);
+
   return (
     <div className="App m-0 p-0 w-full h-full">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/reset-password" element={<ForgotPassword />} />
-          <Route path="/test" element={<Test />} />
+      {!isOnline && <NoInternet />}
 
-          <Route
-            path="/dashboard"
-            element={
-              <Layout>
-                <Dashboard />
-              </Layout>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <Layout>
-                <Profile />
-              </Layout>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <Layout>
-                <Settings />
-              </Layout>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <Layout>
-                <Users />
-              </Layout>
-            }
-          />
-        </Routes>
-      </Router>
+      {isOnline && (
+        <>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/reset-password" element={<ForgotPassword />} />
+              <Route path="/test" element={<Test />} />
 
-      <ToastContainer />
+              <Route
+                path="/dashboard"
+                element={
+                  <Layout>
+                    <Dashboard />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Layout>
+                    <Profile />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <Layout>
+                    <Settings />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <Layout>
+                    <Users />
+                  </Layout>
+                }
+              />
+            </Routes>
+          </Router>
+
+          <ToastContainer />
+        </>
+      )}
     </div>
   );
 }
