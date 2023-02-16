@@ -40,9 +40,7 @@ function Register() {
     if (password.length < 6) {
       return toast.error("Password must be up to 6 characters");
     }
-    //     if (!validateEmail(email)) {
-    //       return toast.error("Please enter a valid email");
-    //     }
+
     if (password !== password2) {
       return toast.error("Passwords do not match");
     }
@@ -53,7 +51,6 @@ function Register() {
       password,
     };
 
-    console.log(userData);
     await dispatch(register(userData));
     await dispatch(sendVerificationEmail());
   };
