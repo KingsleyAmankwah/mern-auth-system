@@ -2,22 +2,22 @@
 
 This is a mern stack project to register and authenticate users.
 
-# Tech Stack
+## :sparkles: Features
 
-```
-Frontend - ReactJs
-Backend - NodeJs, Express
-Database - MongoDB
-State management - Redux toolkit
-
-```
+:heavy_check_mark: User Registration;\
+:heavy_check_mark: Authentication;\
+:heavy_check_mark: Email verification;\
+:heavy_check_mark: Email Verification for Password Reset;\
+:heavy_check_mark: Checks Internet Connectivity;
 
 ## :rocket: Technologies
 
 The following tools were used in this project:
 
+- [MongoDB](https://www.mongodb.com/)
+- [ExpressJs](https://expressjs.com/)
 - [React.js](https://reactjs.org/)
-- [Firebase](https://firebase.google.com/)
+- [NodeJs](https://nodejs.org/en/)
 - [Redux](https://redux.js.org/)
 - [TailwindCSS](https://tailwindcss.com)
 
