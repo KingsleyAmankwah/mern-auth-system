@@ -1,6 +1,7 @@
 # MERN AUTH SYSTEM
 
-This is a mern stack project to register and authenticate users.
+ Learn and Master Authentication and Authorization using MERN Stack.
+ Implement User Regisration, Login, Password Reset, Social Login,User Permissions, Email Notifications etc.
 
 ## :sparkles: Features
 
