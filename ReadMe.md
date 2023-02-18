@@ -1,7 +1,7 @@
-# MERN AUTH SYSTEM
+## :dart: About
 
- Learn and Master Authentication and Authorization using MERN Stack.
- Implement User Regisration, Login, Password Reset, Social Login,User Permissions, Email Notifications etc.
+Learn and Master Authentication and Authorization using MERN Stack.
+Implement User Regisration, Login, Password Reset, Social Login,User Permissions, Email Notifications etc.
 
 ## :sparkles: Features
 
@@ -18,33 +18,30 @@ The following tools were used in this project:
 - [MongoDB](https://www.mongodb.com/)
 - [ExpressJs](https://expressjs.com/)
 - [React.js](https://reactjs.org/)
-- [NodeJs](https://nodejs.org/en/)
 - [Redux](https://redux.js.org/)
 - [TailwindCSS](https://tailwindcss.com)
 
-## Usage
+## :white_check_mark: Requirements
 
-Rename the .envexample to .env and add your MONGO_URI
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
 
-### Install dependencies
+```bash
+# Clone this project
+$ git clone https://github.com/KingsleyAmankwah/mern-auth-system
 
-```
 # Backend dependencies
 npm install
 
 # Frontend dependencies
 cd frontend
 npm install
-```
 
-### Run Backend
+# Usage
+Rename the .envexample to .env and add your MONGO_URI
 
-```
+# Run Server
 npm run server
-```
 
-### Run Frontend
-
-```
+# Run Frontend
 npm run client
 ```
